@@ -15,7 +15,8 @@
     "debug": "^4.1.1",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
-    "mongoose": "^5.4.13"
+    "mongoose": "^5.4.13",
+    "lodash": "latest"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
