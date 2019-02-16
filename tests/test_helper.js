@@ -1,15 +1,4 @@
-const Note = require('../models/note')
-
-const initialNotes = [
-    {
-        content: 'HTML on helppoa',
-        important: false
-    },
-    {
-        content: 'HTTP-protokollan tärkeimmät metodit ovat GET ja POST',
-        important: true
-    }
-]
+const Blog = require('../models/blog')
 
 const initialBlogs = [
     {
@@ -63,20 +52,20 @@ const initialBlogs = [
 ]
 
 const nonExistingId = async () => {
-    const note = new Note({content: 'willremovethissoon'})
-    await note.save()
-    await note.remove()
-    return note._id.toString()
+    const {title, author, url, likes, ...fields} = initialBlogs[0]
+    const blog = new Blog({title: title, author: author, url: url, likes: likes})
+    await blog.save()
+    await blog.remove()
+    return blog._id.toString()
 }
 
-const notesInDb = async () => {
-    const notes = await Note.find({})
-    return notes.map(note => note.toJSON())
+const blogsInDb = async () => {
+    const blogs = await Blog.find({})
+    return blogs.map(blog => blog.toJSON())
 }
 
 module.exports = {
-    notesInDb,
-    nonExistingId,
-    initialNotes,
     initialBlogs,
+    nonExistingId,
+    blogsInDb,
 }

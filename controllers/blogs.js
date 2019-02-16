@@ -22,4 +22,41 @@ blogsRouter.post('/', async (request, response, next) => {
     }
 })
 
+// blogsRouter.get('/:id', async (request, response, next) => {
+//     try {
+//         const note = await Note.findById(request.params.id)
+//         if (note) {
+//             response.json(note.toJSON())
+//         } else {
+//             response.status(404).end()
+//         }
+//     } catch (exception) {
+//         next(exception)
+//     }
+// })
+//
+// blogsRouter.delete('/:id', async (request, response, next) => {
+//     try {
+//         await Note.findByIdAndRemove(request.params.id)
+//         response.status(204).end()
+//     } catch (exception) {
+//         next(exception)
+//     }
+// })
+//
+// blogsRouter.put('/:id', (request, response, next) => {
+//     const body = request.body
+//
+//     const note = {
+//         content: body.content,
+//         important: body.important,
+//     }
+//
+//     Note.findByIdAndUpdate(request.params.id, note, {new: true})
+//         .then(updatedNote => {
+//             response.json(updatedNote.toJSON())
+//         })
+//         .catch(error => next(error))
+// })
+
 module.exports = blogsRouter
