@@ -1,0 +1,170 @@
+PUT http://localhost:3001/api/blogs/5c6877ac2b52740b35878105
+Content-Type: application/json
+
+{
+  "title": "title2",
+  "author": "author2",
+  "url": "url2",
+  "likes": 2
+}
+
+<> 2019-02-16T105646.200.json
+
+###
+
+PUT http://localhost:3001/api/blogs/5c6877ac2b52740b35878105
+Content-Type: application/json
+
+{
+  "title": "title2",
+  "author": "author2",
+  "url": "url2",
+  "likes": 2
+}
+
+<> 2019-02-16T105123.200.json
+
+###
+
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+  "title": "title",
+  "author": "author",
+  "url": "url",
+  "likes": 1
+}
+
+<> 2019-02-16T105052.200.json
+
+###
+
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+}
+
+<> 2019-02-16T093627.400.json
+
+###
+
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+}
+
+<> 2019-02-16T093601.200.json
+
+###
+
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+}
+
+<> 2019-02-16T093414.200.json
+
+###
+
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+}
+
+<> 2019-02-16T093320.200.json
+
+###
+
+GET http://localhost:3001/api/blogs
+
+<> 2019-02-15T111247.200.json
+
+###
+
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+  "title": "title",
+  "author": "author",
+  "url": "url",
+  "likes": 0
+}
+
+<> 2019-02-15T111044.200.json
+
+###
+
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+  "title": "test title",
+  "author": "test author",
+  "url": "test url",
+  "likes": 0
+}
+
+<> 2019-02-15T110944.200.json
+
+###
+
+GET http://localhost:3001/api/notes
+
+<> 2019-02-15T103613.200.json
+
+###
+
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+  "content": "REST-client on hyvä API:n testaamisessa",
+  "important": true
+}
+
+<> 2019-02-15T103603.200.json
+
+###
+
+GET http://localhost:3001/api/notes
+
+<> 2019-02-15T095723.200.json
+
+###
+
+GET http://localhost:3001/notes
+
+<> 2019-02-15T095702.404.json
+
+###
+
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+  "content": "REST-client on hyvä API:n testaamisessa",
+  "important": true
+}
+
+<> 2019-02-15T095629.200.json
+
+###
+
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+  "content": "REST-client on hyvä API:n testaamisessa",
+  "important": true
+}
+
+<> 2019-02-15T095605.200.json
+
+###
+

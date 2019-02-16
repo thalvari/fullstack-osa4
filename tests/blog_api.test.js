@@ -84,7 +84,43 @@ describe('addition of a new blog', async () => {
     })
 })
 
-// describe('viewing a specifin note', async () => {
+describe('deletion of a blog', async () => {
+    test('succeeds with status code 204 if id is valid', async () => {
+        let blogs = await helper.blogsInDb()
+        const blog = blogs[0]
+        await api
+            .delete(`/api/blogs/${blog.id}`)
+            .expect(204)
+        blogs = await helper.blogsInDb()
+        expect(blogs.length).toBe(helper.initialBlogs.length - 1)
+        const ids = blogs.map(blog => blog.id)
+        expect(ids).not.toContain(blog.id)
+    })
+})
+
+describe('editing a blog', async () => {
+    test('succeeds with valid data', async () => {
+        let blogs = await helper.blogsInDb()
+        const oldBlog = blogs[0]
+        const newBlog = {title: 'test', author: 'test', url: 'test', likes: 0}
+        await api
+            .put(`/api/blogs/${oldBlog.id}`)
+            .send(newBlog)
+            .expect(200)
+            .expect('Content-Type', /application\/json/)
+        blogs = await helper.blogsInDb()
+        expect(blogs.length).toBe(helper.initialBlogs.length)
+        blogs = blogs.map(blog => ({
+            title: blog.title,
+            author: blog.author,
+            url: blog.url,
+            likes: blog.likes
+        }))
+        expect(blogs).toContainEqual(newBlog)
+    })
+})
+
+// describe('viewing a specific note', async () => {
 //     test('succeeds with a valid id', async () => {
 //         const notesAtStart = await helper.notesInDb()
 //
@@ -114,27 +150,6 @@ describe('addition of a new blog', async () => {
 //         await api
 //             .get(`/api/notes/${invalidId}`)
 //             .expect(400)
-//     })
-// })
-//
-// describe('deletion of a note', async () => {
-//     test('succeeds with status code 200 if id is valid', async () => {
-//         const notesAtStart = await helper.notesInDb()
-//         const noteToDelete = notesAtStart[0]
-//
-//         await api
-//             .delete(`/api/notes/${noteToDelete.id}`)
-//             .expect(204)
-//
-//         const notesAtEnd = await helper.notesInDb()
-//
-//         expect(notesAtEnd.length).toBe(
-//             helper.initialNotes.length - 1
-//         )
-//
-//         const contents = notesAtEnd.map(r => r.content)
-//
-//         expect(contents).not.toContain(noteToDelete.content)
 //     })
 // })
 
