@@ -4,12 +4,17 @@ const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
 const Blog = require('../models/blog')
+const User = require('../models/user')
 
 beforeEach(async () => {
     await Blog.remove({})
     const blogObjects = helper.initialBlogs.map(blog => new Blog(blog))
     const promiseArray = blogObjects.map(blog => blog.save())
     await Promise.all(promiseArray)
+
+    await User.remove({})
+    const user = {username: 'root', password: 'sekret'}
+    await api.post('/api/users').send(user)
 })
 
 describe('when there is initially some blogs saved', async () => {
@@ -39,10 +44,12 @@ describe('when there is initially some blogs saved', async () => {
 
 describe('addition of a new blog', async () => {
     test('succeeds with valid data', async () => {
+        const response = await api.post('/api/login').send({username: 'root', password: 'sekret'})
         const newBlog = {title: 'test', author: 'test', url: 'test', likes: 0}
         await api
             .post('/api/blogs')
             .send(newBlog)
+            .set('Authorization', 'Bearer ' + response.body.token)
             .expect(200)
             .expect('Content-Type', /application\/json/)
         const blogs = await helper.blogsInDb()
@@ -52,10 +59,12 @@ describe('addition of a new blog', async () => {
     })
 
     test('field likes defaults to 0', async () => {
+        const response = await api.post('/api/login').send({username: 'root', password: 'sekret'})
         const newBlog = {title: 'test', author: 'test', url: 'test'}
         await api
             .post('/api/blogs')
             .send(newBlog)
+            .set('Authorization', 'Bearer ' + response.body.token)
             .expect(200)
             .expect('Content-Type', /application\/json/)
         const blogs = await helper.blogsInDb()
@@ -63,22 +72,36 @@ describe('addition of a new blog', async () => {
         expect(blog.likes).toBe(0)
     })
 
-    test('fails with status code 400 no title field', async () => {
+    test('fails with status code 400 if no title field', async () => {
+        const response = await api.post('/api/login').send({username: 'root', password: 'sekret'})
         const newBlog = {author: 'test', url: 'test', likes: 0}
         await api
             .post('/api/blogs')
             .send(newBlog)
+            .set('Authorization', 'Bearer ' + response.body.token)
             .expect(400)
         const blogs = await helper.blogsInDb()
         expect(blogs.length).toBe(helper.initialBlogs.length)
     })
 
-    test('fails with status code 400 no url field', async () => {
+    test('fails with status code 400 if no url field', async () => {
+        const response = await api.post('/api/login').send({username: 'root', password: 'sekret'})
         const newBlog = {title: 'test', author: 'test', likes: 0}
         await api
             .post('/api/blogs')
             .send(newBlog)
+            .set('Authorization', 'Bearer ' + response.body.token)
             .expect(400)
+        const blogs = await helper.blogsInDb()
+        expect(blogs.length).toBe(helper.initialBlogs.length)
+    })
+
+    test('fails with no token', async () => {
+        const newBlog = {title: 'test', author: 'test', url: 'test', likes: 0}
+        await api
+            .post('/api/blogs')
+            .send(newBlog)
+            .expect(401)
         const blogs = await helper.blogsInDb()
         expect(blogs.length).toBe(helper.initialBlogs.length)
     })
