@@ -20,7 +20,7 @@ usersRouter.post('/', async (request, response, next) => {
             name: body.name,
             passwordHash,
         })
-        const savedUser = await user.save().populate('blogs')
+        const savedUser = await user.save()
         response.json(savedUser)
     } catch (exception) {
         next(exception)
